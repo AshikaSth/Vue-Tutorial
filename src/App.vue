@@ -1,28 +1,41 @@
 <template>
-<h2>{{ 2+3+5 }}</h2>
-<h2>{{ 5+10+5 }}</h2>
-<h2>Add method- {{ add(5,10,10) }}</h2>
-<h2>Multiply method - {{ multiply(9) }}</h2>
-<h2>Multiply methos - {{ multiply(baseValue) }}</h2>
-</template>
+<h2>{{name}}</h2>
+<div>
+  <button v-on:mouseover="name = 'Batman'">Change to Batman</button>
+  <button v-on:mouseover="changeName($event), increment(8, $event)">Change to Ashika</button>
 
+</div>
+<h2>{{ count }}</h2>
+<button v-on:click="count += 1"> Increment </button>
+<button v-on:click="count -= 1">Decrement</button>
+<h2>{{ counts }}</h2>
+<button @click="increment(8, $event)"> Increment by 8</button>
+<button @click="decrement(2)">Decrement by 2</button>
+</template>
 <script>
 
 export default {
   name: 'App',
   data() {
     return{
-      baseMultiplier: 5,
-      baseValue: 2
+      name: "Ashika",
+      count: 0,
+      counts:0,
     }
      
   },
   methods:{
-    add(a,b,c){
-      return a+b+c
+    increment(num, event){
+      this.counts+=num
+      console.log('Event', event)
+
     },
-    multiply(num){
-      return num * this.baseMultiplier
+    decrement(num){
+      this.counts-=num
+    },
+    changeName(event){
+      this.name='Ashika'
+      console.log('Event', event)
     }
   }
 };
