@@ -1,16 +1,65 @@
 <template>
-<h2>{{name}}</h2>
-<div>
-  <button v-on:mouseover="name = 'Batman'">Change to Batman</button>
-  <button v-on:mouseover="changeName($event), increment(8, $event)">Change to Ashika</button>
-
-</div>
-<h2>{{ count }}</h2>
-<button v-on:click="count += 1"> Increment </button>
-<button v-on:click="count -= 1">Decrement</button>
-<h2>{{ counts }}</h2>
-<button @click="increment(8, $event)"> Increment by 8</button>
-<button @click="decrement(2)">Decrement by 2</button>
+  <div>
+    <pre>
+      {{ JSON.stringify(formValues, null, 2) }}
+  </pre></div>
+<h2>Form</h2>
+<form @submit="submitForm"> 
+  <div>
+    <label for="name">Name</label>
+    <input type="text" id="name" v-model="formValues.name">
+  </div>
+  <div>
+    <label for="profie">Profile Summary</label>
+    <textarea id="profile" v-model="formValues.profileSummary"/>
+  </div>
+  <div>
+    <label for="country">Country</label>
+    <select id="country" v-model="formValues.country">
+      <option value="">Select a country</option>
+      <option value="nepal">Nepal</option>
+      <option value="vietnam">Vietnam</option>
+      <option value="indonesia">Indonesia</option>
+    </select>
+  </div>
+  <div>
+    <label for="jobLocation">Job Location</label>
+  <select id="jobLocation" multiple v-model="formValues.jobLocation">
+      <option value="nepal">Nepal</option>
+      <option value="vietnam">Vietnam</option>
+      <option value="indonesia">Indonesia</option>
+    </select>
+  </div>
+  <div>
+    <input type="checkbox" id="remoteWork" v-model="formValues.remoteWork" true-value="yes" false-value="no">
+    <label for="remoteWork">Open to Remote Work?</label>
+  </div>
+  <div>
+    <label>Skills</label>
+    <input type="checkbox" id="html" value="html" v-model="formValues.skillSet">
+    <label for="html">HTML</label>
+    <input type="checkbox" id="css" value="css" v-model="formValues.skillSet">
+    <label for="css">CSS</label>
+    <input type="checkbox" id="javascript" value="javascript" v-model="formValues.skillSet">
+    <label for="javascript">Javascript</label>
+    <input type="checkbox" id="vue" value="vue" v-model="formValues.skillSet">
+    <label for="vue">Vue</label>
+  </div>
+  <div>
+    <label>Years of Expereince</label>
+    <input type="radio" id="0-2" value="0-2" v-model="formValues.yearsOfExperience"/>
+    <label for="0-2">0-2 years</label>
+    <input type="radio" id="3-5" value="3-5" v-model="formValues.yearsOfExperience"/>
+    <label for="3-5">3-5 years</label>
+    <input type="radio" id="6-10" value="6-10" v-model="formValues.yearsOfExperience"/>
+    <label for="6-10">6-10 years</label>
+    <input type="radio" id="10+" value="10+" v-model="formValues.yearsOfExperience"/>
+    <label for="10+">10+ years</label>
+  </div>
+  <div>
+    <button>Submit</button>
+  </div>
+</form>
 </template>
 <script>
 
@@ -18,24 +67,22 @@ export default {
   name: 'App',
   data() {
     return{
-      name: "Ashika",
-      count: 0,
-      counts:0,
+      formValues: {
+        name: '',
+        profileSummary:'',
+        country: '',
+        jobLocation: [],
+        remoteWork: "no",
+        skillSet:[],
+        yearsOfExperience:'',
+      }
     }
      
   },
   methods:{
-    increment(num, event){
-      this.counts+=num
-      console.log('Event', event)
-
-    },
-    decrement(num){
-      this.counts-=num
-    },
-    changeName(event){
-      this.name='Ashika'
-      console.log('Event', event)
+    submitForm(event){
+      event.preventDefault()
+      console.log('Form values:',this.formValues)
     }
   }
 };
@@ -46,23 +93,46 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  /* text-align: center; */
   color: #2c3e50;
   margin-top: 60px;
 }
-.underline{
+.underline {
   text-decoration: underline;
 }
-
-.promoted{
+.promoted {
   font-style: italic;
 }
-
-.new{
-  color: green;
+.new {
+  color: olivedrab;
+}
+.sold-out {
+  color: red;
+}
+label {
+  font-weight: bold;
+  display: flex;
+  margin-bottom: 5px;
 }
 
-.sold-out{
-  color: red;
+input + label {
+  font-weight: bold;
+  display: inline-flex;
+  margin-right: 20px;
+}
+
+input[type='text'],
+textarea,
+select {
+  display: block;
+  width: 400px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 </style>
